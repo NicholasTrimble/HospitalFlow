@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HospitalFlow</title>
+    
+    <!-- Existing Project Dependencies -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HospitalFlow.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    
+    <!-- Modern Typography Frame Integration -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="hospitalflow-layout text-light min-h-full d-flex flex-column">
+
+    <!-- EXECUTIVE TRANSPARENT HEADER MODULE -->
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-sm navbar-dark border-bottom custom-navbar py-3">
+            <div class="container-fluid px-4">
+                
+                <!-- Brand Treatment -->
+                <a class="navbar-brand fw-bold tracking-tight text-white d-flex align-items-center gap-2 group" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-heartbeat text-rose transition-pulse"></i> 
+                    <span>Hospital<span class="text-secondary-muted font-light">Flow</span></span>
+                </a>
+                
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <!-- Navigation Directory links -->
+                    <ul class="navbar-nav flex-grow-1 ms-4 gap-2">
+                        <li class="nav-item">
+                            <a class="nav-link custom-nav-link text-muted" asp-area="" asp-controller="Rooms" asp-action="Index">
+                                <i class="fas fa-hospital me-1.5 opacity-50"></i> Rooms
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link custom-nav-link text-muted" asp-area="" asp-controller="Equipments" asp-action="Index">
+                                <i class="fas fa-microscope me-1.5 opacity-50"></i> Equipment
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <!-- Right-aligned authentication metrics partial -->
+                    <div class="navbar-nav ms-auto custom-login-links">
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CORE VIEW CONTAINER WINDOW -->
+    <div class="container flex-grow-1 py-5">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- UTILITY PLATFORM FOOTER -->
+    <footer class="footer border-top text-center text-muted py-4 mt-auto">
+        <div class="container fs-8 font-monospace tracking-wider text-uppercase opacity-50">
+            &copy; 2026 HospitalFlow &bull; Clinical Logistics Coordination Architecture
+        </div>
+    </footer>
+
+    <!-- Script assets dependencies -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+
+</html>

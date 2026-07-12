@@ -1,0 +1,108 @@
+﻿@model HospitalFlow.Models.Room
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Room</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Department)
+        </dd>
+    </dl>
+</div>
+
+<hr class="my-5" />
+
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0 text-dark">
+                <i class="fas fa-boxes text-info me-2"></i> Assigned Equipment
+            </h3>
+            <span class="badge bg-dark rounded-pill px-3">
+                Items in Room: @(Model.Equipments?.Count ?? 0)
+            </span>
+        </div>
+
+        @if (Model.Equipments != null && Model.Equipments.Any())
+        {
+            <div class="card shadow-sm border-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light text-muted small text-uppercase">
+                            <tr>
+                                <th class="ps-4">Type</th>
+                                <th>Serial Number</th>
+                                <th>Current Status</th>
+                                <th class="text-end pe-4">Quick Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var equip in Model.Equipments)
+                            {
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-info-subtle p-2 rounded me-3 text-info">
+                                                <i class="fas fa-microscope"></i>
+                                            </div>
+                                            <span class="fw-bold">@equip.Type</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-secondary border font-monospace">@equip.SerialNumber</span>
+                                    </td>
+                                    <td>
+                                        @{
+                                            var statusColor = equip.Status == "Available" ? "success" :
+                                                              equip.Status == "Maintenance" ? "danger" : "primary";
+                                        }
+                                        <span class="badge bg-@statusColor-subtle text-@statusColor border-@statusColor border">
+                                            @equip.Status
+                                        </span>
+                                    </td>
+                                    <td class="text-end pe-4">
+                                        <a asp-controller="Equipments" asp-action="Edit" asp-route-id="@equip.Id"
+                                               class="btn btn-sm btn-outline-secondary border-0"
+                                               data-bs-toggle="tooltip" title="Move or Update">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        else
+            {
+                <div class="text-center py-5 bg-light rounded border border-dashed">
+                    <i class="fas fa-truck-loading fa-3x text-muted mb-3"></i>
+                    <h5 class="text-secondary">This room is currently empty</h5>
+                    <p class="small text-muted">No equipment has been assigned to @Model.Name yet.</p>
+                    <a asp-controller="Equipments" asp-action="Index" class="btn btn-sm btn-primary mt-2">Manage Assets</a>
+                </div>
+            }
+        </div>
+    </div>
+
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

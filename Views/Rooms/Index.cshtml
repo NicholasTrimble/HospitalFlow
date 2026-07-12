@@ -1,0 +1,80 @@
+﻿@model IEnumerable<HospitalFlow.Models.Room>
+
+@{
+    ViewData["Title"] = "Facility Map";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5"><i class="fas fa-hospital-symbol text-danger"></i> Hospital Rooms</h1>
+        <a asp-action="Create" class="btn btn-danger shadow-sm">
+            <i class="fas fa-plus"></i> Add New Room
+        </a>
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            var count = item.Equipments?.Count ?? 0;
+            var max = item.MaxCapacity > 0 ? item.MaxCapacity : 1;
+            var percent = (count * 100) / max;
+
+            string barColor = percent >= 100 ? "bg-danger" : (percent >= 80 ? "bg-warning" : "bg-success");
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm border-0 border-top border-4 border-info">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title text-dark mb-0">@item.Name</h5>
+                            <span class="badge bg-light text-dark border">@item.Department</span>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small class="text-muted">Occupancy</small>
+                                <small class="fw-bold">@count / @item.MaxCapacity</small>
+                            </div>
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar @barColor" role="progressbar" style="width: @percent%"></div>
+                            </div>
+                            @if (percent >= 100)
+                            {
+                                <small class="text-danger fw-bold"><i class="fas fa-exclamation-triangle"></i> Room Full</small>
+                            }
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-link text-decoration-none">View Inventory</a>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="Edit"><i class="fas fa-cog"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip"
+                                title="Delete"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+
+        <script>
+            var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/hospitalHub")
+            .build();
+
+            connection.on("RefreshData", function () {
+            console.log("SignalR: Change detected! Reloading page...");
+           
+            location.reload();
+            });
+
+            connection.start().catch(function (err) {
+            return console.error(err.toString());
+            });
+        </script>
+    }

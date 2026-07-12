@@ -1,0 +1,276 @@
+/* ==========================================================================
+   HOSPITALFLOW SYSTEM STYLESHEET (CLEAN CLINICAL LOGISTICS THEME)
+   ========================================================================== */
+
+:root {
+    --bg-canvas: #f8fafc; /* Ultra-light medical gray-white canvas background */
+    --panel-bg: #ffffff; /* Pure crisp white for standalone cards */
+    --border-light: #e2e8f0; /* Muted neutral border rules */
+    /* --- Arkansas Children's Anchored Palette (with Red Swap) --- */
+    --med-blue: #0c4a6e; /* Trustworthy deep navy blue primary */
+    --med-blue-hover: #0369a1; /* Vibrant mid-blue interaction tone */
+    --med-green: #0f766e; /* Muted corporate teal/seafoam green secondary */
+    --med-red: #de0d0d; /* Replaced ACH Yellow with Clinical Red accent */
+    /* --- Core Text Profiles --- */
+    --text-dark-main: #0f172a; /* Deep slate-black for maximum readability */
+    --text-slate-muted: #64748b; /* Neutral dark gray for description prose */
+}
+/* --- Document Architecture Root --- */
+
+html {
+    height: 100% !important;
+}
+
+body {
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background-color: var(--bg-canvas) !important;
+    color: var(--text-dark-main) !important;
+    font-family: 'Inter', sans-serif !important;
+    padding-bottom: 80px !important;
+}
+/* --- Global Utilities --- */
+
+.text-rose {
+    color: var(--med-red) !important;
+}
+
+.text-secondary-muted {
+    color: var(--med-green) !important;
+    font-weight: 500;
+}
+
+.font-light {
+    font-weight: 300;
+}
+
+.tracking-tight {
+    letter-spacing: -0.025em;
+}
+
+.fs-7 {
+    font-size: 0.825rem;
+}
+
+.fs-8 {
+    font-size: 0.75rem;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.border-dark {
+    border-color: var(--border-light) !important;
+}
+
+.max-w-xl {
+    max-w: 36rem;
+}
+/* --- Navigation Header (Deep Trustworthy Navy Blue) --- */
+
+.custom-navbar {
+    background-color: var(--med-blue) !important;
+    border-bottom: 3px solid var(--med-green) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+    .custom-navbar .navbar-brand span {
+        color: #ffffff !important;
+    }
+
+.custom-nav-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8) !important;
+    transition: all 0.2s ease !important;
+    padding: 0.5rem 0.75rem !important;
+}
+
+    .custom-nav-link:hover {
+        color: #ffffff !important;
+        background-color: rgba(255, 255, 255, 0.08);
+        border-radius: 6px;
+    }
+
+.custom-login-links a {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+    .custom-login-links a:hover {
+        color: #ffffff !important;
+    }
+
+.transition-pulse {
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover .transition-pulse {
+    transform: scale(1.1);
+}
+/* --- Executive Banner (Home Page Grid Split) --- */
+
+.command-banner {
+    background: linear-gradient(135deg, #ffffff 0%, #fff1f2 50%, #fa435a 100%) !important;
+    border: 1px solid #f43f5e20 !important;
+    box-shadow: 0 4px 15px rgba(244, 63, 94, 0.04);
+}
+
+    /* Force dark layout typography over the custom home banner gradient background */
+    .command-banner h1 {
+        color: #0f172a !important;
+    }
+
+    .command-banner p.lead {
+        color: #334155 !important;
+    }
+
+.bg-pulse-glow {
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.6), transparent 70%);
+}
+
+.btn-authenticate {
+    background: var(--med-blue) !important;
+    color: white !important;
+    border: none !important;
+    transition: all 0.2s ease;
+}
+
+    .btn-authenticate:hover {
+        background: var(--med-blue-hover) !important;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(12, 74, 110, 0.2) !important;
+    }
+/* --- Interactive Bento Panels (Clean Clinical White Grid) --- */
+
+.bento-panel {
+    background-color: var(--panel-bg) !important;
+    border: 1px solid var(--border-light) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+    .bento-panel:hover {
+        transform: translateY(-3px);
+        border-color: var(--med-blue) !important;
+        box-shadow: 0 10px 25px -5px rgba(12, 74, 110, 0.1), 0 8px 10px -6px rgba(12, 74, 110, 0.05);
+    }
+
+    .bento-panel .panel-title {
+        color: var(--med-blue) !important;
+    }
+
+    .bento-panel p.text-muted {
+        color: var(--text-slate-muted) !important;
+    }
+
+    .bento-panel .panel-action-link {
+        color: var(--med-green) !important;
+    }
+
+.icon-frame {
+    width: 48px;
+    height: 48px;
+}
+/* Icon alpha wrappers customized to pop cleanly off clinical white panels */
+
+.bg-danger-alpha {
+    background-color: rgba(222, 13, 13, 0.06) !important;
+}
+
+.bg-info-alpha {
+    background-color: rgba(12, 74, 110, 0.06) !important;
+}
+/* Sliding Accent Lines on Hover (The Mapped Red Accent Switch) */
+
+.panel-accent-line {
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 3px;
+    transform: scaleY(0);
+    transition: transform 0.25s ease;
+    border-radius: 0 4px 4px 0;
+}
+/* Replaced yellow accent trigger marker with a crisp medical red animation slider bar */
+
+.bento-panel:hover .panel-accent-line {
+    transform: scaleY(2);
+}
+
+.bento-panel:hover .panel-action-link {
+    color: var(--med-blue) !important;
+}
+
+.bento-panel:hover .tracking-arrow {
+    transform: translateX(4px);
+}
+/* --- SECURE LOCKED SYSTEM FOOTER --- */
+
+.footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 60px !important;
+    z-index: 9999 !important;
+    background-color: #ffffff !important;
+    border-top: 1px solid var(--border-light) !important;
+    color: var(--text-slate-muted) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02);
+}
+
+/* ==========================================================================
+   GLOBAL TEXT OVERRIDES (THE DARK UTILITY REDIRECTS)
+   ========================================================================== */
+/* Force old dark-mode utility markup layers to render readable slate-black text colors */
+.hospitalflow-workspace.text-white,
+.hospitalflow-workspace .text-white,
+.bento-panel .text-white,
+h3.text-white,
+p.text-white,
+span.text-white {
+    color: var(--text-dark-main) !important;
+}
+
+/* Fix standard text components globally to match the new canvas contrast */
+p, td, th, li, label, input, select, textarea {
+    color: var(--text-dark-main);
+}
+
+/* Redirect dark background utilities to clean, modern light-mode gray modules */
+.bg-black-alpha, .bg-dark {
+    background-color: #f1f5f9 !important;
+    color: var(--text-dark-main) !important;
+}
+
+/* Specific console container style alignment overrides */
+.ai-console {
+    background-color: #fafafa !important;
+    border: 1px solid var(--border-light) !important;
+}
+
+    .ai-console div, .ai-console span {
+        color: var(--text-dark-main) !important;
+    }
+
+/* Clear standard system entry parameters */
+.form-control {
+    background-color: #ffffff !important;
+    color: var(--text-dark-main) !important;
+    border: 1px solid var(--border-light) !important;
+}
+
+    .form-control::placeholder {
+        color: var(--text-slate-muted) !important;
+    }

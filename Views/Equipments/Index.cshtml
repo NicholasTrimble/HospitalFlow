@@ -1,0 +1,125 @@
+﻿@model IEnumerable<HospitalFlow.Models.Equipment>
+
+@{
+    ViewData["Title"] = "Equipment Dashboard";
+    
+    // Quick logic to get counts for the Stats Bar
+    var total = Model.Count();
+    var available = Model.Count(e => e.Status == "Available");
+    var maintenance = Model.Count(e => e.Status == "Maintenance" || e.Status == "Cleaning");
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5"><i class="fas fa-microscope text-primary"></i> Equipment Assets</h1>
+        <a asp-action="Create" class="btn btn-primary shadow-sm">
+            <i class="fas fa-plus"></i> Add New Asset
+        </a>
+    </div>
+
+    <div class="row mb-4">
+        </div>
+
+    <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-body bg-light rounded">
+            <form asp-action="Index" method="get" class="row g-3">
+                <div class="col-md-9">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="fas fa-search text-muted"></i>
+                        </span>
+                        <input type="text" name="searchString" class="form-control border-start-0" 
+                               placeholder="Search by Serial Number (e.g. SN-102) or Type (e.g. Ventilator)..." 
+                               value="@ViewData["CurrentFilter"]" />
+                    </div>
+                </div>
+                <div class="col-md-3 d-grid gap-2 d-md-flex">
+                    <button type="submit" class="btn btn-primary flex-grow-1">Search</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="row mt-4">
+        @foreach (var item in Model)
+        {
+            string borderClass = item.Status switch {
+                "Available" => "border-success",
+                "In-Use" => "border-primary",
+                "Cleaning" => "border-warning",
+                "Maintenance" => "border-danger",
+                _ => "border-secondary"
+            };
+
+            string badgeClass = item.Status switch {
+                "Available" => "bg-success-subtle text-success border-success",
+                "In-Use" => "bg-primary-subtle text-primary border-primary",
+                "Cleaning" => "bg-warning-subtle text-warning-emphasis border-warning",
+                "Maintenance" => "bg-danger-subtle text-danger border-danger",
+                _ => "bg-secondary-subtle text-secondary border-secondary"
+            };
+
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm border-0 border-start border-4 @borderClass">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                          <span class="badge @badgeClass border px-2 shadow-sm">
+                          <i class="fas @(item.Status == "Available" ? "fa-check-circle" : item.Status == "Maintenance" ? "fa-tools" : "fa-info-circle") me-1"></i>
+                             @item.Status
+                          </span>
+                            <small class="text-muted">#@item.SerialNumber</small>
+                        </div>
+                        
+                        <h5 class="card-title mb-1">@item.Type</h5>
+                        <p class="card-text text-muted small mb-3">
+                            <i class="fas fa-door-open me-1"></i> @(item.Room?.Name ?? "Unassigned")
+                        </p>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" 
+                               title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" 
+                               title="View Details">
+                                <i class="fas fa-history"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" 
+                                title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .border-4 { border-width: 4px !important; }
+    .card { transition: transform 0.2s; }
+    .card:hover { transform: translateY(-5px); }
+</style>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+
+    <script>
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/hospitalHub")
+            .build();
+
+        connection.on("RefreshData", function () {
+            console.log("SignalR: Change detected! Reloading page...");
+            location.reload(); 
+        });
+
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+    </script>
+}
