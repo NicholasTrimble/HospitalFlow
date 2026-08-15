@@ -9,7 +9,7 @@ public class GroqDeepSeekService : IAiAssistantService
     private readonly HttpClient _httpClient;
     private readonly string _apiKey;
     private const string ApiUrl = "https://api.groq.com/openai/v1/chat/completions";
-    private const string ModelName = "llama-3.3-70b-versatile";
+    private const string ModelName = "openai/gpt-oss-120b";
 
     public GroqDeepSeekService(HttpClient httpClient, IConfiguration configuration)
     {

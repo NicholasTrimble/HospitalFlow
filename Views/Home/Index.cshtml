@@ -4,123 +4,120 @@
 
 <div class="hospitalflow-workspace text-white">
 
-    <!-- EXECUTIVE BANNER WORKSPACE -->
-    <div class="command-banner p-5 mb-5 rounded-3 border border-dark position-relative overflow-hidden">
-        <div class="position-absolute end-0 top-0 h-100 w-25 bg-pulse-glow opacity-10 pointer-events-none"></div>
-        
-        <div class="d-flex flex-col flex-md-row justify-content-between align-items-start align-items-md-center gap-4 position-relative z-index-10">
+    <!-- MAIN HEADER -->
+    <div class="command-banner p-4 p-md-5 mb-4 rounded-3 border border-dark position-relative overflow-hidden">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-4 position-relative z-index-10">
             <div>
-                <div class="text-rose text-uppercase tracking-widest font-monospace mb-2" style="font-size: 0.7rem; font-weight: 700;">
-                    <span class="d-inline-block rounded-circle bg-danger animate-pulse-dot me-2" style="width: 6px; height: 6px;"></span>
-                    Clinical Logistics Management Matrix // Standby
+                <div class="text-rose text-uppercase tracking-widest font-monospace mb-2" style="font-size: 0.75rem; font-weight: 700;">
+                    <span class="d-inline-block rounded-circle bg-success me-2" style="width: 8px; height: 8px;"></span>
+                    Hospital Operations Dashboard
                 </div>
-                <h1 class="display-5 fw-bold tracking-tight text-white m-0">
+                <h1 class="display-6 fw-bold tracking-tight text-white m-0">
                     Hospital<span class="text-secondary-muted font-light">Flow</span>
                 </h1>
-                <p class="lead text-muted fs-6 font-medium mt-2 mb-0 max-w-xl">
-                    Enterprise Medical Asset, Bed Capacity, & Facility Allocation Control Architecture.
+                <p class="text-muted fs-6 mt-2 mb-0">
+                    Real time room availability, equipment management, and clinical decision support.
                 </p>
             </div>
 
             @if (!User.Identity!.IsAuthenticated)
             {
                 <div class="flex-shrink-0">
-                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-authenticate px-4 py-2.5 fw-semibold border-0 shadow">
-                        Authenticate Operator
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-authenticate px-4 py-2 fw-semibold border-0 shadow">
+                        Staff Sign In
                     </a>
                 </div>
             }
         </div>
     </div>
 
-    <!-- PREMIUM INTERACTIVE MODULE PANELS -->
+    <!-- MAIN NAVIGATION PANELS -->
     <div class="row g-4">
-        <!-- MODULE 1: FACILITY WORKSPACE -->
+        <!-- MODULE 1: ROOMS & CAPACITY -->
         <div class="col-md-6">
-            <div class="bento-panel h-100 p-5 rounded-3 border border-dark position-relative cursor-pointer" onclick="location.href='@Url.Action("Index", "Rooms")'">
+            <div class="bento-panel h-100 p-4 rounded-3 border border-dark position-relative cursor-pointer" onclick="location.href='@Url.Action("Index", "Rooms")'">
                 <div class="panel-accent-line bg-danger"></div>
-                
+
                 <div class="d-flex flex-column justify-content-between h-100">
                     <div class="panel-content-top">
-                        <div class="icon-frame bg-danger-alpha border border-danger-subtle rounded-3 d-flex align-items-center justify-content-center mb-4">
-                            <i class="fas fa-door-open text-danger fs-4"></i>
+                        <div class="icon-frame bg-danger-alpha border border-danger-subtle rounded-3 d-flex align-items-center justify-content-center mb-3">
+                            <i class="fas fa-bed text-danger fs-5"></i>
                         </div>
-                        <h3 class="fw-bold tracking-tight text-white mb-2 panel-title transition">Facility & Wing Logistics</h3>
-                        <p class="text-muted fs-7 leading-relaxed mb-4">
-                            Coordinate active hospital footprints, room distribution capacities, critical ICU bays, and isolation workflows in real time.
+                        <h4 class="fw-bold tracking-tight text-white mb-2 panel-title">Room & Bed Management</h4>
+                        <p class="text-muted fs-7 mb-3">
+                            Check real time room occupancy, assign patient beds, and manage ICU or isolation capacity.
                         </p>
                     </div>
-                    
-                    <div class="panel-action-link fs-7 fw-bold text-uppercase tracking-wider text-muted mt-4 transition">
-                        Launch Logistics Panel <i class="fas fa-chevron-right ms-1 tracking-arrow transition"></i>
+
+                    <div class="panel-action-link fs-7 fw-semibold text-muted transition">
+                        View Rooms & Wings <i class="fas fa-arrow-right ms-1"></i>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- MODULE 2: ASSET TRACKING WORKSPACE -->
+        <!-- MODULE 2: EQUIPMENT INVENTORY -->
         <div class="col-md-6">
-            <div class="bento-panel h-100 p-5 rounded-3 border border-dark position-relative cursor-pointer" onclick="location.href='@Url.Action("Index", "Equipments")'">
+            <div class="bento-panel h-100 p-4 rounded-3 border border-dark position-relative cursor-pointer" onclick="location.href='@Url.Action("Index", "Equipments")'">
                 <div class="panel-accent-line bg-info"></div>
-                
+
                 <div class="d-flex flex-column justify-content-between h-100">
                     <div class="panel-content-top">
-                        <div class="icon-frame bg-info-alpha border border-info-subtle rounded-3 d-flex align-items-center justify-content-center mb-4">
-                            <i class="fas fa-tools text-info fs-4"></i>
+                        <div class="icon-frame bg-info-alpha border border-info-subtle rounded-3 d-flex align-items-center justify-content-center mb-3">
+                            <i class="fas fa-stethoscope text-info fs-5"></i>
                         </div>
-                        <h3 class="fw-bold tracking-tight text-white mb-2 panel-title transition">Clinical Telemetry Assets</h3>
-                        <p class="text-muted fs-7 leading-relaxed mb-4">
-                            Monitor active locations, operational lifecycles, maintenance status tags, and deployment histories for technical telemetry hardware.
+                        <h4 class="fw-bold tracking-tight text-white mb-2 panel-title">Medical Equipment</h4>
+                        <p class="text-muted fs-7 mb-3">
+                            Track device locations, monitor scheduled maintenance, and check availability across departments.
                         </p>
                     </div>
-                    
-                    <div class="panel-action-link fs-7 fw-bold text-uppercase tracking-wider text-muted mt-4 transition">
-                        Inspect Asset Register <i class="fas fa-chevron-right ms-1 tracking-arrow transition"></i>
+
+                    <div class="panel-action-link fs-7 fw-semibold text-muted transition">
+                        View Equipment Inventory <i class="fas fa-arrow-right ms-1"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- MODULE 3: INTELLIGENT COMPLIANCE & RESOURCE ASSISTANT -->
-<div class="row g-4 mt-2">
-    <div class="col-12">
-        <div class="bento-panel p-5 rounded-3 border border-dark position-relative">
-            <div class="panel-accent-line bg-warning"></div>
+    <!-- MODULE 3: CLINICAL ASSISTANT -->
+    <div class="row g-4 mt-1">
+        <div class="col-12">
+            <div class="bento-panel p-4 rounded-3 border border-dark position-relative">
+                <div class="panel-accent-line bg-warning"></div>
 
-            <div class="icon-frame bg-warning-alpha border border-warning-subtle rounded-3 d-flex align-items-center justify-content-center mb-4">
-                <i class="fas fa-microchip text-warning fs-4"></i>
-            </div>
-            <h3 class="fw-bold tracking-tight text-white mb-2">Operations AI Assistant</h3>
-            <p class="text-muted fs-7 leading-relaxed mb-4">
-                Query the active database cluster using natural language processing to audit room constraints, analyze equipment status configurations, or identify logistical operational anomalies.
-            </p>
+                <div class="icon-frame bg-warning-alpha border border-warning-subtle rounded-3 d-flex align-items-center justify-content-center mb-3">
+                    <i class="fas fa-robot text-warning fs-5"></i>
+                </div>
+                <h4 class="fw-bold tracking-tight text-white mb-2">Clinical Support Assistant</h4>
+                <p class="text-muted fs-7 mb-3">
+                    Ask quick operational questions regarding unit protocols, room prep, or asset allocations.
+                </p>
 
-            @if (User.Identity!.IsAuthenticated)
-            {
-                <div class="ai-console border border-dark rounded-3 bg-black-alpha p-4 mb-4" style="min-height: 120px; max-height: 300px; overflow-y: auto;">
-                    <div id="aiResponseOutput" class="text-muted fs-7 font-monospace">
-                        Console Standby // Awaiting system directive...
+                @if (User.Identity!.IsAuthenticated)
+                {
+                    <div class="ai-console border border-dark rounded-3 bg-black-alpha p-3 mb-3" style="min-height: 100px; max-height: 250px; overflow-y: auto;">
+                        <div id="aiResponseOutput" class="text-muted fs-7">
+                            Ask a question below to query the operational assistant.
+                        </div>
                     </div>
-                </div>
 
-                <div class="input-group border border-dark rounded-3 overflow-hidden bg-black-alpha p-1">
-                    <input type="text" id="aiInputPrompt" class="form-control bg-transparent text-white border-0 fs-7 shadow-none ps-3" placeholder="Describe the resource metric or capacity anomaly you want to query..." />
-                    <button id="submitAiQuery" class="btn btn-warning fw-bold fs-7 text-uppercase tracking-wider px-4 py-2 border-0">
-                        Execute Query
-                    </button>
-                </div>
-            }
-            else
-            {
-                <div class="border border-dark rounded-3 bg-black-alpha p-4 text-center text-muted fs-7 font-monospace">
-                    [Access Denied] - Authenticate operator session to initialize neural system interface.
-                </div>
-            }
+                    <div class="input-group border border-dark rounded-3 overflow-hidden bg-black-alpha p-1">
+                        <input type="text" id="aiInputPrompt" class="form-control bg-transparent text-white border-0 fs-7 shadow-none ps-3" placeholder="e.g., How many ventilators are currently available?" />
+                        <button id="submitAiQuery" class="btn btn-warning fw-semibold fs-7 px-4 py-2 border-0">
+                            Send
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="border border-dark rounded-3 bg-black-alpha p-3 text-center text-muted fs-7">
+                        Please sign in to access the operational assistant.
+                    </div>
+                }
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <script>
@@ -131,8 +128,7 @@
 
         if (!promptText) return;
 
-        // Transition UI console states to loading status
-        outputField.innerHTML = `<span class="text-warning animate-pulse-dot">Executing Neural Analysis Pipelines... Standby.</span>`;
+        outputField.innerHTML = `<span class="text-warning">Thinking...</span>`;
         inputField.value = "";
 
         try {
@@ -144,13 +140,12 @@
 
             if (response.ok) {
                 const data = await response.json();
-                // Render text formatting safely preserving DeepSeek layout options
                 outputField.innerText = data.response;
             } else {
-                outputField.innerHTML = `<span class="text-danger">[ERROR] Request execution failed with code: ${response.status}</span>`;
+                outputField.innerHTML = `<span class="text-danger">Unable to load response (Status: ${response.status}). Please try again.</span>`;
             }
         } catch (error) {
-            outputField.innerHTML = `<span class="text-danger">[ERROR] Neural architecture interface connection dropped.</span>`;
+            outputField.innerHTML = `<span class="text-danger">Connection lost. Check your network and try again.</span>`;
         }
     });
 </script>
