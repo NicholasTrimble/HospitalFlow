@@ -3,6 +3,7 @@ using System;
 using HospitalFlow.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalFlow.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260907190952_AddPatientEntity")]
+    partial class AddPatientEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,41 +55,6 @@ namespace HospitalFlow.Migrations
                     b.ToTable("Equipments");
                 });
 
-            modelBuilder.Entity("HospitalFlow.Models.Patient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AcuityLevel")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("AdmissionDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MedicalRecordNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Patients");
-                });
-
             modelBuilder.Entity("HospitalFlow.Models.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -105,9 +73,6 @@ namespace HospitalFlow.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -324,15 +289,6 @@ namespace HospitalFlow.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HospitalFlow.Models.Patient", b =>
-                {
-                    b.HasOne("HospitalFlow.Models.Room", "Room")
-                        .WithMany("Patients")
-                        .HasForeignKey("RoomId");
-
-                    b.Navigation("Room");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -387,8 +343,6 @@ namespace HospitalFlow.Migrations
             modelBuilder.Entity("HospitalFlow.Models.Room", b =>
                 {
                     b.Navigation("Equipments");
-
-                    b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618
         }

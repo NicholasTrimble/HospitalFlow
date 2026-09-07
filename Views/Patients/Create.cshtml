@@ -1,0 +1,64 @@
+@model HospitalFlow.Models.Patient
+
+@{
+    ViewData["Title"] = "Patient Intake";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="card shadow-sm border-0 border-top border-4 border-danger">
+            <div class="card-body p-4">
+                <h3 class="card-title mb-3">
+                    <i class="fas fa-clipboard-user text-danger me-2"></i> Patient Intake
+                </h3>
+                <p class="text-muted small mb-4">Admit a new patient into the hospital registry and assign a bed if available.</p>
+
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label fw-bold">Full Name</label>
+                        <input asp-for="FullName" class="form-control" placeholder="Jane Doe" required />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="MedicalRecordNumber" class="form-label fw-bold">Medical Record Number (MRN)</label>
+                        <input asp-for="MedicalRecordNumber" class="form-control font-monospace" placeholder="MRN-10492" required />
+                        <span asp-validation-for="MedicalRecordNumber" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="AcuityLevel" class="form-label fw-bold">Triage Acuity</label>
+                        <select asp-for="AcuityLevel" class="form-select" asp-items="Html.GetEnumSelectList<HospitalFlow.Models.PatientAcuity>()"></select>
+                        <span asp-validation-for="AcuityLevel" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="RoomId" class="form-label fw-bold">Assign Room (Optional)</label>
+                        <select asp-for="RoomId" class="form-select" asp-items="ViewBag.RoomId">
+                            <option value="">-- Keep in Triage / Unassigned --</option>
+                        </select>
+                        <small class="text-muted">Only available rooms are listed.</small>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Notes" class="form-label fw-bold">Intake Notes</label>
+                        <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Symptoms, allergies, initial observations..."></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger">Complete Intake</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

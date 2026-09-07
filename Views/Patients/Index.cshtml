@@ -1,0 +1,100 @@
+﻿@model IEnumerable<HospitalFlow.Models.Patient>
+
+@{
+    ViewData["Title"] = "Patient Registry";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="display-5 mb-0"><i class="fas fa-user-injured text-danger me-2"></i> Patient Directory</h1>
+            <p class="text-muted mb-0">Hospital triage, intake records, and bed placements</p>
+        </div>
+        <a asp-action="Create" class="btn btn-danger shadow-sm">
+            <i class="fas fa-user-plus me-1"></i> New Patient Intake
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>MRN</th>
+                        <th>Patient Name</th>
+                        <th>Acuity</th>
+                        <th>Current Room</th>
+                        <th>Admitted</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                <em>No patient records found. Click "New Patient Intake" to admit a patient.</em>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var p in Model)
+                    {
+                        <tr>
+                            <td class="font-monospace fw-bold">@p.MedicalRecordNumber</td>
+                            <td>
+                                <strong>@p.FullName</strong>
+                                @if (!string.IsNullOrEmpty(p.Notes))
+                                {
+                                    <small class="text-muted d-block text-truncate" style="max-width: 250px;">@p.Notes</small>
+                                }
+                            </td>
+                            <td>
+                                @switch (p.AcuityLevel)
+                                {
+                                    case HospitalFlow.Models.PatientAcuity.Critical:
+                                        <span class="badge bg-danger">Critical</span>
+                                        break;
+                                    case HospitalFlow.Models.PatientAcuity.Monitoring:
+                                        <span class="badge bg-warning text-dark">Monitoring</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-info text-dark">Stable</span>
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                @if (p.Room != null)
+                                {
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-door-open me-1"></i> @p.Room.Name (@p.Room.Department)
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">
+                                        <i class="fas fa-clock me-1"></i> Unassigned (Triage)
+                                    </span>
+                                }
+                            </td>
+                            <td class="small text-muted">@p.AdmissionDate.ToLocalTime().ToString("MMM dd, yyyy HH:mm")</td>
+                            <td class="text-end">
+                                @if (p.RoomId.HasValue)
+                                {
+                                    <form asp-action="Discharge" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="@p.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-warning">
+                                            Discharge
+                                        </button>
+                                    </form>
+                                }
+                                <a asp-action="Delete" asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger ms-1">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
